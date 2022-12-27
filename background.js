@@ -1,13 +1,10 @@
 chrome.runtime.onConnect.addListener((port) => {
-    console.log('onConnect', port.name);
-    if (Math.random() >= 0.5) {
-        let start = new Date().getTime();
-        while (new Date().getTime() - start < 500) {}
-        console.log('waited 500ms');
-    } else {
-        console.log('did not wait');
-    }
-    port.onMessage.addListener((message) => {
-        console.log('onMessage', port.name, message);
-    });
+    let tabId = port.sender.tab.id;
+    let frameId = port.sender.frameId;
+    console.log('connection from', tabId, frameId);
+    let name = `reverse-${tabId}-${frameId}`;
+    let reversePort = chrome.tabs.connect(tabId, {frameId: frameId, name: name});
+    setTimeout(() => {
+        reversePort.postMessage({x: `message to reverse port ${name}`});
+    }, 500);
 });
