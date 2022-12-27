@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "test",
+    "version": "1.0",
+    "description": "test",
+    "author": "comex",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_idle",
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "file://*/*"
+            ],
+            "match_about_blank": true,
+            "all_frames": true,
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "minimum_chrome_version": "57.0.0.0",
+    "permissions": [
+        "<all_urls>"
+    ]
+}

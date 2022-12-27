@@ -1,0 +1,19 @@
+<script>
+chrome.runtime.onConnect.addListener((port) => {
+    console.log('onConnect', port.name);
+    if (Math.random() >= 0.5) {
+        let start = new Date().getTime();
+        let x = 0;
+        for (let i = 0; i < 100000000; i++) {
+            x += i;
+        }
+        let end = new Date().getTime();
+        console.log(`wasteful computation produced ${x} in ${end - start} ms`);
+    } else {
+        console.log('skipping wasteful computation');
+    }
+    port.onMessage.addListener((message) => {
+        console.log('onMessage', port.name, message);
+    });
+});
+</script>
